@@ -1,3 +1,4 @@
+package presentacion;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -12,6 +13,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 
@@ -46,10 +49,11 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				Login.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
 		setTitle("Login ");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,6 +61,7 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		{
 			tftUsuario = new JTextField();
+			tftUsuario.addActionListener(new TftUsuarioActionListener());
 			tftUsuario.setToolTipText("Introducir el usuario para acceder a la agenda.");
 			tftUsuario.setBounds(230, 65, 163, 22);
 			contentPane.add(tftUsuario);
@@ -67,21 +72,22 @@ public class Login extends JFrame {
 			btnAceptar.setToolTipText("Acceder a la agenda.");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if(String.valueOf(tftContrasena.getPassword()).toString().equals(password)){
-						
-						lblInfo.setText("Dentro.");
-						lblInfo.setBackground(Color.GREEN);
-						
-						//Se crea una instancia de la segunda ventana (JFrame)
-						GestorUsuario gestor = new GestorUsuario();
-						//se hace visible
-						//gestor.
-						//	gestor.setLocationRelativeTo(null);
-						//se destruye la ventana actual (atributo a nivel de clase)
-						
-					}else{
-						lblInfo.setText("Contraseña incorrecta.");
+					if (String.valueOf(tftContrasena.getPassword()).isEmpty()) {
+						lblInfo.setText("Introduccir contraseña");
 						lblInfo.setBackground(Color.RED);
+					} else {
+						if (String.valueOf(tftContrasena.getPassword()).toString().equals(password)) {
+
+							lblInfo.setText("Dentro");
+							lblInfo.setBackground(Color.GREEN);
+							GestorUsuario gestor = new GestorUsuario();
+							gestor.setVisible(true);
+							gestor.setLocationRelativeTo(null);
+						
+						} else {
+							lblInfo.setText("Contraseña incorrecta");
+							lblInfo.setBackground(Color.RED);
+						}
 					}
 				}
 			});
@@ -123,5 +129,11 @@ public class Login extends JFrame {
 			contentPane.add(lblInfo);
 		}
 	}
-}
 
+	private class TftUsuarioActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			tftContrasena.enable();
+			tftContrasena.requestFocus();
+		}
+	}
+}
