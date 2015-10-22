@@ -25,7 +25,7 @@ public class Login extends JFrame {
 	private JLabel lblUsuario;
 	private JLabel lblContrasena;
 	private JPasswordField tftContrasena;
-	private final String password = "prueba";
+	private final String password = "iso";
 	private JLabel lblInfo;
 
 	/**

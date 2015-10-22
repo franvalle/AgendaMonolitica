@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import java.awt.Toolkit;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
@@ -14,24 +18,37 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.JScrollPane;
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
+import javax.swing.Box;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
 
 public class GestorUsuario extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JPanel panel;
+	private JPanel panelDatos;
+	private JPanel panelBotones;
+	private JPanel panelTabla;
 	private JLabel lblNombre;
 	private JLabel lblApellidos;
 	private JLabel lblDireccion;
 	private JLabel lblCorreo;
-	private JLabel lblTelfono;
+	private JLabel lblTelefono;
+	private JTextField tftNombre;
+	private JTextField tftApellidos;
+	private JTextField tftDireccion;
+	private JTextField tftCorreo;
+	private JTextField tftTelefono;
+	private JButton btnAadirContacto;
+	private JButton btnModificarContacto;
+	private JButton btnEliminarContacto;
 	private JTable table;
-	private JButton btnAñadir;
-	private JButton btnModificar;
-	private JButton btnEliminar;
 
 	/**
 	 * Launch the application.
@@ -59,85 +76,123 @@ public class GestorUsuario extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GestorUsuario.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
 		setTitle("Agenda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 735, 565);
+		setBounds(100, 100, 735, 535);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		{
-			textField = new JTextField();
-			textField.setBounds(476, 72, 197, 22);
-			contentPane.add(textField);
-			textField.setColumns(10);
-		}
-		{
-			textField_1 = new JTextField();
-			textField_1.setBounds(476, 135, 197, 22);
-			contentPane.add(textField_1);
-			textField_1.setColumns(10);
-		}
-		{
-			textField_2 = new JTextField();
-			textField_2.setBounds(476, 208, 197, 22);
-			contentPane.add(textField_2);
-			textField_2.setColumns(10);
-		}
-		{
-			textField_3 = new JTextField();
-			textField_3.setBounds(476, 288, 197, 22);
-			contentPane.add(textField_3);
-			textField_3.setColumns(10);
-		}
-		{
-			textField_4 = new JTextField();
-			textField_4.setBounds(476, 368, 197, 22);
-			contentPane.add(textField_4);
-			textField_4.setColumns(10);
-		}
-		{
-			lblNombre = new JLabel("Nombre");
-			lblNombre.setBounds(408, 75, 56, 16);
-			contentPane.add(lblNombre);
-		}
-		{
-			lblApellidos = new JLabel("Apellidos");
-			lblApellidos.setBounds(408, 138, 56, 16);
-			contentPane.add(lblApellidos);
-		}
-		{
-			lblDireccion = new JLabel("Direccion");
-			lblDireccion.setBounds(408, 211, 56, 16);
-			contentPane.add(lblDireccion);
-		}
-		{
-			lblCorreo = new JLabel("Correo ");
-			lblCorreo.setBounds(408, 291, 107, 16);
-			contentPane.add(lblCorreo);
-		}
-		{
-			lblTelfono = new JLabel("Tel\u00E9fono");
-			lblTelfono.setBounds(408, 371, 56, 16);
-			contentPane.add(lblTelfono);
-		}
-		{
-			table = new JTable();
-			table.setBounds(26, 72, 331, 318);
-			contentPane.add(table);
-		}
-		{
-			btnAñadir = new JButton("A\u00D1ADIR CONTACTO");
-			btnAñadir.setBounds(103, 458, 157, 25);
-			contentPane.add(btnAñadir);
-		}
-		{
-			btnModificar = new JButton("MODIFICAR CONTACTO");
-			btnModificar.setBounds(290, 458, 174, 25);
-			contentPane.add(btnModificar);
-		}
-		{
-			btnEliminar = new JButton("ELIMINAR CONTACTO");
-			btnEliminar.setBounds(499, 458, 157, 25);
-			contentPane.add(btnEliminar);
+			panel = new JPanel();
+			panel.setBounds(12, 13, 705, 474);
+			contentPane.add(panel);
+			panel.setLayout(null);
+			{
+				panelDatos = new JPanel();
+				panelDatos.setBounds(374, 24, 301, 355);
+				panel.add(panelDatos);
+				panelDatos.setLayout(null);
+				{
+					lblNombre = new JLabel("Nombre");
+					lblNombre.setBounds(12, 16, 56, 16);
+					panelDatos.add(lblNombre);
+				}
+				{
+					lblApellidos = new JLabel("Apellidos");
+					lblApellidos.setBounds(12, 97, 56, 16);
+					panelDatos.add(lblApellidos);
+				}
+				{
+					lblDireccion = new JLabel("Direccion");
+					lblDireccion.setBounds(12, 174, 56, 16);
+					panelDatos.add(lblDireccion);
+				}
+				{
+					lblCorreo = new JLabel("Correo");
+					lblCorreo.setBounds(12, 257, 56, 16);
+					panelDatos.add(lblCorreo);
+				}
+				{
+					lblTelefono = new JLabel("Telefono");
+					lblTelefono.setBounds(12, 326, 56, 16);
+					panelDatos.add(lblTelefono);
+				}
+				{
+					tftNombre = new JTextField();
+					tftNombre.setBounds(78, 13, 211, 22);
+					panelDatos.add(tftNombre);
+					tftNombre.setColumns(10);
+				}
+				{
+					tftApellidos = new JTextField();
+					tftApellidos.setBounds(78, 91, 211, 22);
+					panelDatos.add(tftApellidos);
+					tftApellidos.setColumns(10);
+				}
+				{
+					tftDireccion = new JTextField();
+					tftDireccion.setBounds(78, 171, 211, 22);
+					panelDatos.add(tftDireccion);
+					tftDireccion.setColumns(10);
+				}
+				{
+					tftCorreo = new JTextField();
+					tftCorreo.setBounds(78, 250, 211, 22);
+					panelDatos.add(tftCorreo);
+					tftCorreo.setColumns(10);
+				}
+				{
+					tftTelefono = new JTextField();
+					tftTelefono.setBounds(78, 320, 134, 22);
+					panelDatos.add(tftTelefono);
+					tftTelefono.setColumns(10);
+				}
+			}
+			{
+				panelBotones = new JPanel();
+				panelBotones.setBounds(26, 427, 649, 35);
+				panel.add(panelBotones);
+				panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				{
+					btnAadirContacto = new JButton("A\u00D1ADIR CONTACTO");
+					panelBotones.add(btnAadirContacto);
+				}
+				{
+					btnModificarContacto = new JButton("MODIFICAR CONTACTO");
+					panelBotones.add(btnModificarContacto);
+				}
+				{
+					btnEliminarContacto = new JButton("ELIMINAR CONTACTO");
+					panelBotones.add(btnEliminarContacto);
+				}
+				panelBotones.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnAadirContacto, btnModificarContacto, btnEliminarContacto}));
+			}
+			{
+				panelTabla = new JPanel();
+				panelTabla.setBounds(27, 24, 301, 355);
+				panel.add(panelTabla);
+				panelTabla.setLayout(new BorderLayout(0, 0));
+				{
+					String[] nombreColumnas = {"Nombre","Apellidos","Direccion","Correo","Telefono"};
+					 Object[][] data = {
+							 {"Mary", "Campione",
+							 "Esquiar", new Integer(5), new Boolean(false)},
+							 {"Lhucas", "Huml",
+							 "Patinar", new Integer(3), new Boolean(true)},
+							 {"Kathya", "Walrath",
+							 "Escalar", new Integer(2), new Boolean(false)},
+							 {"Marcus", "Andrews",
+							 "Correr", new Integer(7), new Boolean(true)},
+							 {"Angela", "Lalth",
+							 "Nadar", new Integer(4), new Boolean(false)}
+							 };
+					DefaultTableModel dtm= new DefaultTableModel();					
+					table = new JTable(dtm);
+					dtm.addColumn(columnName, columnData);
+					JScrollPane scrollPane = new JScrollPane(table);
+					panelTabla.add(scrollPane, BorderLayout.CENTER);
+					
+				}
+			}
 		}
 	}
 }
