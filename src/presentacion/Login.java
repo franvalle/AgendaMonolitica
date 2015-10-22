@@ -15,9 +15,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class Login extends JFrame {
 
+	private static Login frame = new Login();
 	private JPanel contentPane;
 	private JTextField tftUsuario;
 	private JButton btnAceptar;
@@ -27,7 +30,9 @@ public class Login extends JFrame {
 	private JPasswordField tftContrasena;
 	private final String password = "iso";
 	private JLabel lblInfo;
-
+	private JLabel lblLogo;
+ 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -35,7 +40,6 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -43,6 +47,8 @@ public class Login extends JFrame {
 				}
 			}
 		});
+		
+		
 	}
 
 	/**
@@ -52,7 +58,7 @@ public class Login extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				Login.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
-		setTitle("Login ");
+		setTitle("Login");
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -62,14 +68,14 @@ public class Login extends JFrame {
 		{
 			tftUsuario = new JTextField();
 			tftUsuario.addActionListener(new TftUsuarioActionListener());
-			tftUsuario.setToolTipText("Introducir el usuario para acceder a la agenda.");
-			tftUsuario.setBounds(230, 65, 163, 22);
+			tftUsuario.setToolTipText("Introducir el usuario para acceder a la agenda");
+			tftUsuario.setBounds(251, 65, 163, 22);
 			contentPane.add(tftUsuario);
 			tftUsuario.setColumns(10);
 		}
 		{
 			btnAceptar = new JButton("Aceptar");
-			btnAceptar.setToolTipText("Acceder a la agenda.");
+			btnAceptar.setToolTipText("Acceder a la agenda");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if (String.valueOf(tftContrasena.getPassword()).isEmpty() || tftUsuario.getText().isEmpty()) {
@@ -82,9 +88,14 @@ public class Login extends JFrame {
 
 							lblInfo.setText("Dentro");
 							lblInfo.setBackground(Color.GREEN);
+							//Creamos otra ventana con el gestor
 							GestorUsuario gestor = new GestorUsuario();
 							gestor.setVisible(true);
 							gestor.setLocationRelativeTo(null);
+						
+							//Cerramos el login
+							frame.dispose();
+																						
 						
 						} else {
 							lblInfo.setText("Contraseña incorrecta");
@@ -93,42 +104,50 @@ public class Login extends JFrame {
 					}
 				}
 			});
-			btnAceptar.setBounds(146, 195, 109, 37);
+			btnAceptar.setBounds(167, 195, 109, 37);
 			contentPane.add(btnAceptar);
 		}
 		{
 			btnCancelar = new JButton("Cancelar");
-			btnCancelar.setToolTipText("Salir del login.");
+			btnCancelar.setToolTipText("Salir del login");
 			btnCancelar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					System.exit(0);
 				}
 			});
-			btnCancelar.setBounds(282, 195, 109, 37);
+			btnCancelar.setBounds(305, 195, 109, 37);
 			contentPane.add(btnCancelar);
 		}
 		{
 			lblUsuario = new JLabel("Usuario");
-			lblUsuario.setBounds(146, 68, 56, 16);
+			lblUsuario.setBounds(167, 68, 56, 16);
 			contentPane.add(lblUsuario);
 		}
 		{
 			lblContrasena = new JLabel("Contrase\u00F1a");
-			lblContrasena.setBounds(146, 113, 72, 16);
+			lblContrasena.setBounds(167, 113, 72, 16);
 			contentPane.add(lblContrasena);
 		}
 		{
 			tftContrasena = new JPasswordField();
-			tftContrasena.setToolTipText("Introducir la contrase\u00F1a para acceder a la agenda.");
-			tftContrasena.setBounds(230, 110, 163, 22);
+			tftContrasena.setToolTipText("Introducir la contrase\u00F1a para acceder a la agenda");
+			tftContrasena.setBounds(251, 110, 163, 22);
 			contentPane.add(tftContrasena);
 		}
 		{
 			lblInfo = new JLabel("");
+			lblInfo.setFont(new Font("Tahoma", Font.BOLD, 14));
 			lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
 			lblInfo.setOpaque(true);
-			lblInfo.setBounds(146, 142, 247, 40);
+			lblInfo.setBounds(167, 142, 247, 40);
 			contentPane.add(lblInfo);
+		}
+		{
+			lblLogo = new JLabel("");
+			lblLogo.setToolTipText("Aplicacion creada por FoodieSoft");
+			lblLogo.setIcon(new ImageIcon(Login.class.getResource("/presentacion/logo.png")));
+			lblLogo.setBounds(12, 13, 138, 182);
+			contentPane.add(lblLogo);
 		}
 	}
 

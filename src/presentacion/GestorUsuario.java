@@ -24,6 +24,8 @@ import javax.swing.JToolBar;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+
 import javax.swing.Box;
 import java.awt.Component;
 import javax.swing.ListSelectionModel;
@@ -32,6 +34,17 @@ import java.awt.event.MouseEvent;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.SystemColor;
+import javax.swing.AbstractListModel;
+import javax.swing.JTree;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GestorUsuario extends JFrame {
 
@@ -54,6 +67,8 @@ public class GestorUsuario extends JFrame {
 	private JButton btnModificarContacto;
 	private JButton btnEliminarContacto;
 	private JTable tablaContactos;
+	private JLabel lblAvisos;
+	private JMenuBar menuBar;
 
 	/**
 	 * Launch the application.
@@ -77,18 +92,24 @@ public class GestorUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public GestorUsuario() {
+		addWindowListener(new ThisWindowListener());
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GestorUsuario.class.getResource("/com/sun/javafx/scene/control/skin/caspian/dialog-more-details.png")));
 		setTitle("Agenda");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 735, 535);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		{
+			menuBar = new JMenuBar();
+			menuBar.setBounds(0, 0, 729, 26);
+			contentPane.add(menuBar);
+		}
+		{
 			panel = new JPanel();
-			panel.setBounds(12, 13, 705, 474);
+			panel.setBounds(12, 29, 705, 458);
 			contentPane.add(panel);
 			panel.setLayout(null);
 			{
@@ -107,7 +128,7 @@ public class GestorUsuario extends JFrame {
 					panelDatos.add(lblApellidos);
 				}
 				{
-					lblDireccion = new JLabel("Direccion");
+					lblDireccion = new JLabel("Direcci\u00F3n");
 					lblDireccion.setBounds(12, 174, 56, 16);
 					panelDatos.add(lblDireccion);
 				}
@@ -117,36 +138,41 @@ public class GestorUsuario extends JFrame {
 					panelDatos.add(lblCorreo);
 				}
 				{
-					lblTelefono = new JLabel("Telefono");
+					lblTelefono = new JLabel("Tel\u00E9fono");
 					lblTelefono.setBounds(12, 326, 56, 16);
 					panelDatos.add(lblTelefono);
 				}
 				{
 					tftNombre = new JTextField();
+					tftNombre.setToolTipText("Nombre del contacto");
 					tftNombre.setBounds(78, 13, 185, 22);
 					panelDatos.add(tftNombre);
 					tftNombre.setColumns(10);
 				}
 				{
 					tftApellidos = new JTextField();
+					tftApellidos.setToolTipText("Apellidos del contacto");
 					tftApellidos.setBounds(78, 91, 185, 22);
 					panelDatos.add(tftApellidos);
 					tftApellidos.setColumns(10);
 				}
 				{
 					tftDireccion = new JTextField();
+					tftDireccion.setToolTipText("Direccion del contacto");
 					tftDireccion.setBounds(78, 171, 185, 22);
 					panelDatos.add(tftDireccion);
 					tftDireccion.setColumns(10);
 				}
 				{
 					tftCorreo = new JTextField();
+					tftCorreo.setToolTipText("Correo electronico del contacto");
 					tftCorreo.setBounds(78, 250, 185, 22);
 					panelDatos.add(tftCorreo);
 					tftCorreo.setColumns(10);
 				}
 				{
 					tftTelefono = new JTextField();
+					tftTelefono.setToolTipText("Telefono del contacto");
 					tftTelefono.setBounds(78, 320, 134, 22);
 					panelDatos.add(tftTelefono);
 					tftTelefono.setColumns(10);
@@ -154,21 +180,24 @@ public class GestorUsuario extends JFrame {
 			}
 			{
 				panelBotones = new JPanel();
-				panelBotones.setBounds(26, 427, 649, 35);
+				panelBotones.setBounds(26, 392, 649, 35);
 				panel.add(panelBotones);
 				panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 				{
 					btnAadirContacto = new JButton("A\u00D1ADIR CONTACTO");
+					btnAadirContacto.setToolTipText("A\u00F1adir contacto a la agenda");
 					btnAadirContacto.addActionListener(new BtnAadirContactoActionListener());
 					panelBotones.add(btnAadirContacto);
 				}
 				{
 					btnModificarContacto = new JButton("MODIFICAR CONTACTO");
+					btnModificarContacto.setToolTipText("Modificar el contacto de la agenda");
 					btnModificarContacto.addActionListener(new BtnModificarContactoActionListener());
 					panelBotones.add(btnModificarContacto);
 				}
 				{
 					btnEliminarContacto = new JButton("ELIMINAR CONTACTO");
+					btnEliminarContacto.setToolTipText("Eliminar contacto de la agenda");
 					btnEliminarContacto.addActionListener(new BtnEliminarContactoActionListener());
 					panelBotones.add(btnEliminarContacto);
 				}
@@ -188,7 +217,7 @@ public class GestorUsuario extends JFrame {
 					 
 					DefaultTableModel modeloTabla= new DefaultTableModel(nombreColumnas,0);					
 					tablaContactos = new JTable(modeloTabla);
-					tablaContactos.setMinimumSize(new Dimension(85, 0));
+					tablaContactos.setMinimumSize(new Dimension(200, 0));
 					tablaContactos.setAlignmentY(Component.TOP_ALIGNMENT);
 					tablaContactos.setAlignmentX(Component.LEFT_ALIGNMENT);
 					tablaContactos.addMouseListener(new TablaContactosMouseListener());
@@ -213,6 +242,15 @@ public class GestorUsuario extends JFrame {
 					
 				}
 			}
+			{
+				lblAvisos = new JLabel("");
+				lblAvisos.setBackground(SystemColor.menu);
+				lblAvisos.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblAvisos.setOpaque(true);
+				lblAvisos.setHorizontalAlignment(SwingConstants.CENTER);
+				lblAvisos.setBounds(25, 432, 650, 26);
+				panel.add(lblAvisos);
+			}
 		}
 	}
 	private class TablaContactosMouseListener extends MouseAdapter {
@@ -228,17 +266,48 @@ public class GestorUsuario extends JFrame {
 	}
 	private class BtnAadirContactoActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
-			
+			if(tftNombre.getText().isEmpty() || tftApellidos.getText().isEmpty()){
+				lblAvisos.setText("Debe de introducir un nombre y un apellido para el contacto");
+				lblAvisos.setBackground(Color.RED);
+
+			}else{
+				lblAvisos.setText("Contacto añadido");
+				lblAvisos.setBackground(Color.GREEN);
+			}
 		}
 	}
 	private class BtnModificarContactoActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if(tftNombre.getText().isEmpty() || tftApellidos.getText().isEmpty()){
+				lblAvisos.setText("Debe de introducir un nombre y un apellido para el contacto");
+				lblAvisos.setBackground(Color.RED);
+
+			}else{
+				lblAvisos.setText("Contacto modificado");
+				lblAvisos.setBackground(Color.GREEN);
+			}
 			
 		}
 	}
 	private class BtnEliminarContactoActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if(tftNombre.getText().isEmpty() || tftApellidos.getText().isEmpty()){
+				lblAvisos.setText("Debe de introducir un nombre y un apellido para el contacto");
+				lblAvisos.setBackground(Color.RED);
+
+			}else{
+				lblAvisos.setText("Contacto eliminado");
+				lblAvisos.setBackground(Color.GREEN);
+			}
 			
+		}
+	}
+	private class ThisWindowListener extends WindowAdapter {
+		@Override
+		public void windowClosing(WindowEvent arg0) {
+			Login frame = new Login();
+			frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
 		}
 	}
 }
