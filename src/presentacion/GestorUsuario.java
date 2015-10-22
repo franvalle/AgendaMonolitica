@@ -25,7 +25,6 @@ import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import javax.swing.Box;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
 public class GestorUsuario extends JFrame {
@@ -88,7 +87,7 @@ public class GestorUsuario extends JFrame {
 			panel.setLayout(null);
 			{
 				panelDatos = new JPanel();
-				panelDatos.setBounds(374, 24, 301, 355);
+				panelDatos.setBounds(400, 24, 275, 355);
 				panel.add(panelDatos);
 				panelDatos.setLayout(null);
 				{
@@ -118,25 +117,25 @@ public class GestorUsuario extends JFrame {
 				}
 				{
 					tftNombre = new JTextField();
-					tftNombre.setBounds(78, 13, 211, 22);
+					tftNombre.setBounds(78, 13, 185, 22);
 					panelDatos.add(tftNombre);
 					tftNombre.setColumns(10);
 				}
 				{
 					tftApellidos = new JTextField();
-					tftApellidos.setBounds(78, 91, 211, 22);
+					tftApellidos.setBounds(78, 91, 185, 22);
 					panelDatos.add(tftApellidos);
 					tftApellidos.setColumns(10);
 				}
 				{
 					tftDireccion = new JTextField();
-					tftDireccion.setBounds(78, 171, 211, 22);
+					tftDireccion.setBounds(78, 171, 185, 22);
 					panelDatos.add(tftDireccion);
 					tftDireccion.setColumns(10);
 				}
 				{
 					tftCorreo = new JTextField();
-					tftCorreo.setBounds(78, 250, 211, 22);
+					tftCorreo.setBounds(78, 250, 185, 22);
 					panelDatos.add(tftCorreo);
 					tftCorreo.setColumns(10);
 				}
@@ -164,19 +163,18 @@ public class GestorUsuario extends JFrame {
 					btnEliminarContacto = new JButton("ELIMINAR CONTACTO");
 					panelBotones.add(btnEliminarContacto);
 				}
-				panelBotones.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnAadirContacto, btnModificarContacto, btnEliminarContacto}));
 			}
 			{
 				panelTabla = new JPanel();
-				panelTabla.setBounds(27, 24, 301, 355);
+				panelTabla.setBounds(27, 24, 361, 355);
 				panel.add(panelTabla);
 				panelTabla.setLayout(new BorderLayout(0, 0));
 				{
 					String[] nombreColumnas = {"Nombre","Apellidos","Direccion","Correo","Telefono"};
 					 Object[][] data = {
-							 {"Mary", "Campione",
+							 {"Mary", "Campifrfrfrfrrfone",
 							 "Esquiar", new Integer(5), new Boolean(false)},
-							 {"Lhucas", "Huml",
+							 {"Lhucas", "Hudedededdeeddeeml",
 							 "Patinar", new Integer(3), new Boolean(true)},
 							 {"Kathya", "Walrath",
 							 "Escalar", new Integer(2), new Boolean(false)},
@@ -185,9 +183,10 @@ public class GestorUsuario extends JFrame {
 							 {"Angela", "Lalth",
 							 "Nadar", new Integer(4), new Boolean(false)}
 							 };
-					DefaultTableModel dtm= new DefaultTableModel();					
-					table = new JTable(dtm);
-					dtm.addColumn(columnName, columnData);
+					DefaultTableModel modeloTabla= new DefaultTableModel(nombreColumnas,0);					
+					table = new JTable(modeloTabla);
+					modeloTabla.addRow(data[1]);
+					
 					JScrollPane scrollPane = new JScrollPane(table);
 					panelTabla.add(scrollPane, BorderLayout.CENTER);
 					
