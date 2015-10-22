@@ -72,11 +72,13 @@ public class Login extends JFrame {
 			btnAceptar.setToolTipText("Acceder a la agenda.");
 			btnAceptar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if (String.valueOf(tftContrasena.getPassword()).isEmpty()) {
-						lblInfo.setText("Introduccir contraseña");
+					if (String.valueOf(tftContrasena.getPassword()).isEmpty() || tftUsuario.getText().isEmpty()) {
+						lblInfo.setText("Introduccir usuario y contraseña");
 						lblInfo.setBackground(Color.RED);
+						
 					} else {
 						if (String.valueOf(tftContrasena.getPassword()).toString().equals(password)) {
+							
 
 							lblInfo.setText("Dentro");
 							lblInfo.setBackground(Color.GREEN);

@@ -26,6 +26,12 @@ import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import javax.swing.Box;
 import java.awt.Component;
+import javax.swing.ListSelectionModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestorUsuario extends JFrame {
 
@@ -47,7 +53,7 @@ public class GestorUsuario extends JFrame {
 	private JButton btnAadirContacto;
 	private JButton btnModificarContacto;
 	private JButton btnEliminarContacto;
-	private JTable table;
+	private JTable tablaContactos;
 
 	/**
 	 * Launch the application.
@@ -153,14 +159,17 @@ public class GestorUsuario extends JFrame {
 				panelBotones.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 				{
 					btnAadirContacto = new JButton("A\u00D1ADIR CONTACTO");
+					btnAadirContacto.addActionListener(new BtnAadirContactoActionListener());
 					panelBotones.add(btnAadirContacto);
 				}
 				{
 					btnModificarContacto = new JButton("MODIFICAR CONTACTO");
+					btnModificarContacto.addActionListener(new BtnModificarContactoActionListener());
 					panelBotones.add(btnModificarContacto);
 				}
 				{
 					btnEliminarContacto = new JButton("ELIMINAR CONTACTO");
+					btnEliminarContacto.addActionListener(new BtnEliminarContactoActionListener());
 					panelBotones.add(btnEliminarContacto);
 				}
 			}
@@ -172,26 +181,64 @@ public class GestorUsuario extends JFrame {
 				{
 					String[] nombreColumnas = {"Nombre","Apellidos","Direccion","Correo","Telefono"};
 					 Object[][] data = {
-							 {"Mary", "Campifrfrfrfrrfone",
-							 "Esquiar", new Integer(5), new Boolean(false)},
-							 {"Lhucas", "Hudedededdeeddeeml",
-							 "Patinar", new Integer(3), new Boolean(true)},
-							 {"Kathya", "Walrath",
-							 "Escalar", new Integer(2), new Boolean(false)},
-							 {"Marcus", "Andrews",
-							 "Correr", new Integer(7), new Boolean(true)},
-							 {"Angela", "Lalth",
-							 "Nadar", new Integer(4), new Boolean(false)}
+							 {"Cristian", "Trapero Mora",
+							 "Miguelturra", "critramo@gmail.com", "645123638"},
+							
 							 };
+					 
 					DefaultTableModel modeloTabla= new DefaultTableModel(nombreColumnas,0);					
-					table = new JTable(modeloTabla);
-					modeloTabla.addRow(data[1]);
+					tablaContactos = new JTable(modeloTabla);
+					tablaContactos.setMinimumSize(new Dimension(85, 0));
+					tablaContactos.setAlignmentY(Component.TOP_ALIGNMENT);
+					tablaContactos.setAlignmentX(Component.LEFT_ALIGNMENT);
+					tablaContactos.addMouseListener(new TablaContactosMouseListener());
+					tablaContactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+					tablaContactos.setFillsViewportHeight(true);
 					
-					JScrollPane scrollPane = new JScrollPane(table);
-					panelTabla.add(scrollPane, BorderLayout.CENTER);
+//					int[] anchos = {40, 200, 50,100,20};
+//					for(int i = 0; i < tablaContactos.getColumnCount(); i++) {
+//
+//						tablaContactos.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+//
+//						}
+					
+					for(int i=0; i<30; i++){
+						modeloTabla.addRow(data[0]);
+					}
+					
+					JScrollPane scrollPanel = new JScrollPane(tablaContactos,
+						    JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+						    JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+					panelTabla.add(scrollPanel, BorderLayout.CENTER);
 					
 				}
 			}
+		}
+	}
+	private class TablaContactosMouseListener extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			tftNombre.setText(tablaContactos.getValueAt(tablaContactos.getSelectedRow(),0).toString());
+			tftApellidos.setText(tablaContactos.getValueAt(tablaContactos.getSelectedRow(),1).toString());
+			tftDireccion.setText(tablaContactos.getValueAt(tablaContactos.getSelectedRow(),2).toString());
+			tftCorreo.setText(tablaContactos.getValueAt(tablaContactos.getSelectedRow(),3).toString());
+			tftTelefono.setText(tablaContactos.getValueAt(tablaContactos.getSelectedRow(),4).toString());
+			
+		}
+	}
+	private class BtnAadirContactoActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			
+		}
+	}
+	private class BtnModificarContactoActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+	}
+	private class BtnEliminarContactoActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 	}
 }
