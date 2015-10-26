@@ -13,10 +13,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import dominio.Usuario;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import java.awt.Font;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Login extends JFrame {
 
@@ -67,6 +72,7 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		{
 			tftUsuario = new JTextField();
+			tftUsuario.addFocusListener(new TftUsuarioFocusListener());
 			tftUsuario.addActionListener(new TftUsuarioActionListener());
 			tftUsuario.setToolTipText("Introducir el usuario para acceder a la agenda");
 			tftUsuario.setBounds(251, 65, 163, 22);
@@ -86,13 +92,24 @@ public class Login extends JFrame {
 						if (String.valueOf(tftContrasena.getPassword()).toString().equals(password)) {
 							
 
+							
+							
+							Usuario usuario= new Usuario(lblUsuario.getText(),lblContrasena.getText());
+							
+							try{
+								//Miramos si podemos acceder al gestor mirando en la tabla usuarios
+								
+							}catch(Exception e){
+								
+							}
+							
 							lblInfo.setText("Dentro");
 							lblInfo.setBackground(Color.GREEN);
 							//Creamos otra ventana con el gestor
 							GestorUsuario gestor = new GestorUsuario();
 							gestor.setVisible(true);
 							gestor.setLocationRelativeTo(null);
-						
+											
 							//Cerramos el login
 							frame.dispose();
 																						
@@ -130,6 +147,7 @@ public class Login extends JFrame {
 		}
 		{
 			tftContrasena = new JPasswordField();
+			tftContrasena.addFocusListener(new TftContrasenaFocusListener());
 			tftContrasena.setToolTipText("Introducir la contrase\u00F1a para acceder a la agenda");
 			tftContrasena.setBounds(251, 110, 163, 22);
 			contentPane.add(tftContrasena);
@@ -155,6 +173,26 @@ public class Login extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			tftContrasena.enable();
 			tftContrasena.requestFocus();
+		}
+	}
+	private class TftUsuarioFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent e) {
+		tftUsuario.setBackground(new Color(250,250,210));
+		}
+		@Override
+		public void focusLost(FocusEvent e) {
+		tftUsuario.setBackground(new Color(250,250,250));
+		}
+	}
+	private class TftContrasenaFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent e) {
+		tftContrasena.setBackground(new Color(250,250,210));
+		}
+		@Override
+		public void focusLost(FocusEvent e) {
+		tftContrasena.setBackground(new Color(250,250,250));
 		}
 	}
 }

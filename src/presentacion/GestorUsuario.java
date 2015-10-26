@@ -45,6 +45,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class GestorUsuario extends JFrame {
 
@@ -144,6 +146,7 @@ public class GestorUsuario extends JFrame {
 				}
 				{
 					tftNombre = new JTextField();
+					tftNombre.addFocusListener(new TftNombreFocusListener());
 					tftNombre.setToolTipText("Nombre del contacto");
 					tftNombre.setBounds(78, 13, 185, 22);
 					panelDatos.add(tftNombre);
@@ -151,6 +154,7 @@ public class GestorUsuario extends JFrame {
 				}
 				{
 					tftApellidos = new JTextField();
+					tftApellidos.addFocusListener(new TftApellidosFocusListener());
 					tftApellidos.setToolTipText("Apellidos del contacto");
 					tftApellidos.setBounds(78, 91, 185, 22);
 					panelDatos.add(tftApellidos);
@@ -158,6 +162,7 @@ public class GestorUsuario extends JFrame {
 				}
 				{
 					tftDireccion = new JTextField();
+					tftDireccion.addFocusListener(new TftDireccionFocusListener());
 					tftDireccion.setToolTipText("Direccion del contacto");
 					tftDireccion.setBounds(78, 171, 185, 22);
 					panelDatos.add(tftDireccion);
@@ -165,6 +170,7 @@ public class GestorUsuario extends JFrame {
 				}
 				{
 					tftCorreo = new JTextField();
+					tftCorreo.addFocusListener(new TftCorreoFocusListener());
 					tftCorreo.setToolTipText("Correo electronico del contacto");
 					tftCorreo.setBounds(78, 250, 185, 22);
 					panelDatos.add(tftCorreo);
@@ -172,6 +178,7 @@ public class GestorUsuario extends JFrame {
 				}
 				{
 					tftTelefono = new JTextField();
+					tftTelefono.addFocusListener(new TftTelefonoFocusListener());
 					tftTelefono.setToolTipText("Telefono del contacto");
 					tftTelefono.setBounds(78, 320, 134, 22);
 					panelDatos.add(tftTelefono);
@@ -308,6 +315,56 @@ public class GestorUsuario extends JFrame {
 			Login frame = new Login();
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
+		}
+	}
+	private class TftNombreFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent e) {
+		tftNombre.setBackground(new Color(250,250,210));
+		}
+		@Override
+		public void focusLost(FocusEvent e) {
+		tftNombre.setBackground(new Color(250,250,250));
+		}
+	}
+	private class TftApellidosFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent e) {
+		tftApellidos.setBackground(new Color(250,250,210));
+		}
+		@Override
+		public void focusLost(FocusEvent e) {
+		tftApellidos.setBackground(new Color(250,250,250));
+		}
+	}
+	private class TftDireccionFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent e) {
+		tftDireccion.setBackground(new Color(250,250,210));
+		}
+		@Override
+		public void focusLost(FocusEvent e) {
+		tftDireccion.setBackground(new Color(250,250,250));
+		}
+	}
+	private class TftCorreoFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent e) {
+		tftCorreo.setBackground(new Color(250,250,210));
+		}
+		@Override
+		public void focusLost(FocusEvent e) {
+		tftCorreo.setBackground(new Color(250,250,250));
+		}
+	}
+	private class TftTelefonoFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent e) {
+		tftTelefono.setBackground(new Color(250,250,210));
+		}
+		@Override
+		public void focusLost(FocusEvent e) {
+		tftTelefono.setBackground(new Color(250,250,250));
 		}
 	}
 }
