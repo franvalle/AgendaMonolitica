@@ -13,8 +13,7 @@ public class Usuario {
 	}
 
 	public void accederBBDD(){
-		
-		
+		Agente agente= Agente.getAgente();
 	}
 
 	public String getID() {
