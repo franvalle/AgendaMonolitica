@@ -278,7 +278,7 @@ public class GestorUsuario extends JFrame {
 				lblAvisos.setBackground(Color.RED);
 
 			}else{
-				lblAvisos.setText("Contacto añadido");
+				lblAvisos.setText("Contacto aÃ±adido");
 				lblAvisos.setBackground(Color.GREEN);
 			}
 		}
